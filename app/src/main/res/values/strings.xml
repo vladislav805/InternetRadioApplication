@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="hello_world">Hello world!</string>
+
+	<string name="app_name">Internet Radio v4.2</string>
+	<string name="app_version">v4.2</string>
+	<string name="app_author">Владислав Велюга (c) 2015</string>
+	<string name="app_site">Перейти на страницу приложения</string>
+
+	<string name="title_activity_settings">Настройки</string>
+	<string name="title_activity_list">Радио</string>
+	<string name="title_activity_faves">Закладки</string>
+
+	<string name="action_refresh">Обновить</string>
+	<string name="action_about">О программе</string>
+	<string name="action_track">Текущий трек</string>
+	<string name="action_show_faves">Закладки</string>
+	<string name="action_settings">Настройки</string>
+	<string name="action_bitrate">Битрейт</string>
+	<string name="action_exit">Выход</string>
+
+	<string name="track_addfave">Добавить в закладки</string>
+	<string name="track_copy">Скопировать</string>
+	<string name="track_not_found">Нет информации</string>
+
+	<string name="close_button">Закрыть</string>
+
+	<string name="settings_volume_all">Громкость</string>
+	<string name="title_activity_request_track">Текущий трек</string>
+	<string name="title_activity_about">О приложении</string>
+	<string name="title_activity_station">Радиостанция</string>
+	<string name="title_activity_speed">Проверка соединения</string>
+	<string name="speed_start">Начать</string>
+	<string name="action_speedtest">Проверить скорость</string>
+	<string name="speed_label">Кбайт в секунду</string>
+	<string name="speed_stop">Остановить</string>
+	<string name="nothing_found">Ничего нет</string>
+	<string name="settings_background_work">Фоновая работа</string>
+	<string name="action_openother">Открыть в проигрывателе</string>
+	<string name="action_share_station">Поделиться эфиром</string>
+	<string name="n">null</string>
+
+</resources>
