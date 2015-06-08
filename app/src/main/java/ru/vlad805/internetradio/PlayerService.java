@@ -1,5 +1,6 @@
 package ru.vlad805.internetradio;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -10,20 +11,15 @@ import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
 import android.support.v7.app.NotificationCompat.Builder;
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import android.os.Handler;
 
 public class PlayerService extends Service
 {
@@ -33,7 +29,8 @@ public class PlayerService extends Service
 	public static MediaPlayer media;
 
 
-	public int onStartCommand (Intent intent, int flags, int startId) {
+	public int onStartCommand (Intent intent, int flags, int startId)
+	{
 		stationId = intent.getIntExtra("stationId", 0);
 		if (stationId == 0) return 0;
 
@@ -52,7 +49,8 @@ public class PlayerService extends Service
 		return super.onStartCommand(intent, flags, startId);
 	}
 	@Override
-	public void onDestroy() {
+	public void onDestroy()
+	{
 		super.onDestroy();
 		if (media != null)
 			media.release();
@@ -153,7 +151,7 @@ public class PlayerService extends Service
 
 	private void setNotification ()
 	{
-		notificationId++;
+//		notificationId++;
 
 		mNotifyManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		mBuilder = new NotificationCompat.Builder(context);
@@ -163,7 +161,6 @@ public class PlayerService extends Service
 		context.registerReceiver(eventListener, new IntentFilter(EVENT_FIND));
 
 		mBuilder.setContentTitle("Internet Radio")
-				.setContentText("00:00")
 				.setPriority(0)
 				.setSmallIcon(android.R.drawable.ic_media_play);
 
@@ -175,7 +172,7 @@ public class PlayerService extends Service
 		mBuilder.addAction(android.R.drawable.ic_media_play, "Пауза", pause);
 		mBuilder.addAction(android.R.drawable.ic_search_category_default, "Найти трек", find);
 
-		mBuilder.setStyle(mNotifyText.bigText(station.title));
+		setTimeNotification("00:00");
 		mNotifyManager.notify(notificationId, mBuilder.build());
 	}
 
@@ -215,10 +212,5 @@ public class PlayerService extends Service
 				setTimeNotification(getTime());
 			}
 		}, 0, 1000);
-	}
-
-	private MediaPlayer getPlayer ()
-	{
-		return this.media;
 	}
 }

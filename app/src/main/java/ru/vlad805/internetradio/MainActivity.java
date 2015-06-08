@@ -3,8 +3,10 @@ package ru.vlad805.internetradio;
 import android.app.ProgressDialog;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
 	final public static String KEY_STATIONS = "stations";
 
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity
 
 		pdLoading = Utils.progress(this, null, "Пожалуйста, подождите");
 		pdLoading.show();
-Utils.getSettings(this).edit().remove(KEY_STATIONS).apply();
+
 		if (Utils.hasString(this, KEY_STATIONS))
 		{
 			try
@@ -60,16 +62,7 @@ Utils.getSettings(this).edit().remove(KEY_STATIONS).apply();
 		ibButtonState = (ImageButton) findViewById(R.id.miniplayerState);
 		tvTitle = (TextView) findViewById(R.id.miniplayerTitle);
 
-		ibButtonState.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick (View v)
-			{
-				if (service == null)
-					return;
-
-
-			}
-		});
+		ibButtonState.setOnClickListener(this);
 	}
 
 	Runnable loadList = new Runnable ()
@@ -211,6 +204,37 @@ Utils.getSettings(this).edit().remove(KEY_STATIONS).apply();
 	{
 		tvTitle.setText(s.title);
 	}
+
+
+	@Override
+	public void onClick (View v)
+	{
+		switch (v.getId())
+		{
+			case R.id.miniplayerState:
+				if (PlayerService.media != null)
+					setState(!PlayerService.media.isPlaying());
+				break;
+		}
+	}
+
+	public void setState (boolean isState)
+	{
+		MediaPlayer m = PlayerService.media;
+		if (m == null)
+			return;
+		if (isState)
+			m.start();
+		else
+			m.pause();
+		updateUI(isState);
+	}
+
+	public void updateUI (boolean isState)
+	{
+		ibButtonState.setImageResource(isState ? android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play);
+	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
